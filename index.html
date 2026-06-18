@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Gurriya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600&family=Caveat:wght@500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #FBF3E7;
+    --cream-deep: #F3E6D3;
+    --blush: #E8B4B5;
+    --terracotta: #BD6B4C;
+    --gold: #C99A3C;
+    --ink: #3B2A20;
+    --ink-soft: #6b5645;
+    --navy-top: #171a36;
+    --navy-bottom: #070819;
+    --paper-shadow: rgba(59, 42, 32, 0.18);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Quicksand',sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .serif{font-family:'Fraunces',serif;}
+  .script{font-family:'Caveat',cursive;}
+
+  section{position:relative;}
+
+  /* ============ SCROLL LOCK ============ */
+  body.locked{overflow:hidden;height:100vh;}
+
+  /* ============ ENVELOPE SECTION ============ */
+  #envelope-section{
+    height:100vh;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(201,154,60,0.08), transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(232,180,181,0.12), transparent 50%),
+      var(--cream);
+    position:relative;
+    overflow:hidden;
+  }
+
+  #envelope-section::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(59,42,32,0.015) 0px, transparent 1px, transparent 2px, rgba(59,42,32,0.015) 3px);
+    pointer-events:none;
+  }
+
+  .envelope-wrap{
+    position:relative;
+    cursor:pointer;
+    transform:rotate(-1.2deg);
+    transition:transform 0.4s ease;
+  }
+
+  .envelope-wrap:hover{transform:rotate(-1.2deg) scale(1.015);}
+
+  .envelope{
+    
+    width:min(85vw,500px);
+    aspect-ratio:3/2.05;
+    background:linear-gradient(135deg, #fffaf2, var(--cream-deep));
+    border-radius:4px;
+    box-shadow:
+      0 2px 0 rgba(59,42,32,0.05),
+      0 18px 40px -10px var(--paper-shadow),
+      0 4px 12px -2px rgba(59,42,32,0.12);
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .envelope::before{
+    /* envelope flap (back), static */
+    content:'';
+    position:absolute;
+    top:-1px;
+    left:-1px;
+    right:-1px;
+    height:55%;
+    background:linear-gradient(160deg, var(--cream-deep), #ecdbc2);
+    clip-path:polygon(0 0, 100% 0, 50% 62%);
+    border-radius:4px 4px 0 0;
+    z-index:1;
+    transform-origin:top center;
+    transition:transform 0.7s cubic-bezier(.6,0,.4,1);
+  }
+
+  .envelope-wrap.opened .envelope::before{
+    transform:rotateX(180deg);
+    opacity:0;
+  }
+
+  .envelope-label{
+    font-family:'Caveat',cursive;
+    font-size:clamp(1.3rem, 4vw, 1.7rem);
+    color:var(--ink-soft);
+    text-align:center;
+    z-index:0;
+    transform:rotate(-1deg);
+  transition:opacity 0.4s ease;
+}
+  .envelope-wrap.opened .envelope-label{
+  opacity:0;
+}
+
+  .envelope-label span{
+    display:block;
+    font-size:0.6em;
+    letter-spacing:0.05em;
+    color:var(--terracotta);
+    margin-bottom:2px;
+  }
+
+  .wax-seal{
+    position:absolute;
+    top: 30%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:54px;
+    height:54px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #c97a5c, var(--terracotta) 70%);
+    box-shadow:0 4px 10px rgba(59,42,32,0.35), inset 0 -3px 6px rgba(0,0,0,0.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:2;
+    transition:opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .wax-seal svg{width:24px;height:24px;}
+
+  .envelope-wrap.opened .wax-seal{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(0.4) rotate(25deg);
+  }
+
+  .envelope-hint{
+    position:absolute;
+    bottom:-44px;
+    left:0;
+    right:0;
+    text-align:center;
+    font-size:0.78rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    opacity:0.65;
+    transition:opacity 0.4s ease;
+  }
+
+  .envelope-wrap.opened .envelope-hint{opacity:0;}
+
+  .tape{
+    position:absolute;
+    width:70px;
+    height:26px;
+    background:rgba(232,180,181,0.55);
+    box-shadow:0 1px 3px rgba(59,42,32,0.1);
+  }
+  .tape.t1{top:-12px;left:18%;transform:rotate(-8deg);}
+  .tape.t2{top:-10px;right:14%;transform:rotate(10deg);}
+
+  /* Reveal text after envelope opens */
+  .reveal-text{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.8s ease 0.5s;
+    padding:0 24px;
+  }
+
+  .reveal-text.show{opacity:1;}
+
+  .reveal-text .line1{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(1.5rem,4vw,2.5rem);
+    color:var(--ink);
+    margin-bottom:10px;
+    line-height:1.15;
+}
+.reveal-text{
+    max-width:85%;
+    margin:auto;
+}
+
+  .reveal-text .line2{
+    font-family:'Caveat',cursive;
+    font-size:clamp(1.2rem, 3.5vw, 1.6rem);
+    color:var(--terracotta);
+  }
+
+  .scroll-cue{
+    position:absolute;
+    bottom:48px;
+    left:50%;
+    transform:translateX(-50%);
+    opacity:0;
+    transition:opacity 0.8s ease 1.6s;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    pointer-events:none;
+  }
+  .scroll-cue.show{opacity:1;}
+  .scroll-cue span{
+    font-size:0.75rem;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .scroll-cue .arrow{
+    width:18px;height:18px;
+    border-right:2px solid var(--terracotta);
+    border-bottom:2px solid var(--terracotta);
+    transform:rotate(45deg);
+    animation:bounce 1.8s ease-in-out infinite;
+  }
+  @keyframes bounce{
+    0%,100%{transform:rotate(45deg) translate(0,0);}
+    50%{transform:rotate(45deg) translate(4px,4px);}
+  }
+
+  /* ============ SECTION 2: STARRY TRANSITION ============ */
+  #starry-section{
+    height:220vh;
+    position:relative;
+    background:linear-gradient(to bottom, var(--cream) 0%, var(--navy-top) 28%, var(--navy-top) 60%, var(--navy-bottom) 100%);
+  }
+
+  .starry-sticky{
+    position:sticky;
+    top:0;
+    height:100vh;
+    width:100%;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  #starsCanvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+  }
+
+  .moon{
+    position:absolute;
+    top:12%;
+    right:14%;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fdf6e3, var(--gold) 75%);
+    box-shadow:0 0 60px 10px rgba(201,154,60,0.35), 0 0 120px 40px rgba(201,154,60,0.12);
+    opacity:0;
+    transition:opacity 1.6s ease;
+  }
+  .moon.show{opacity:1;}
+  @media (max-width:640px){
+    .moon{width:60px;height:60px;top:8%;right:10%;}
+  }
+
+  .starry-text{
+    position:relative;
+    z-index:3;
+    text-align:center;
+    padding:0 24px;
+  }
+
+  .starry-text .small-line{
+    font-family:'Caveat',cursive;
+    font-size:clamp(1.2rem, 3.5vw, 1.7rem);
+    color:#e8d9bd;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 1s ease, transform 1s ease;
+    margin-bottom:22px;
+  }
+  .starry-text .small-line.show{opacity:1;transform:translateY(0);}
+
+  .starry-text .big-line{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(2.4rem, 9vw, 5.2rem);
+    color:#fdf6e3;
+    opacity:0;
+    transform:translateY(14px) scale(0.96);
+    transition:opacity 1.2s ease, transform 1.2s ease;
+    text-shadow:0 0 30px rgba(253,246,227,0.45), 0 0 80px rgba(201,154,60,0.25);
+  }
+  .starry-text .big-line.show{opacity:1;transform:translateY(0) scale(1);}
+
+  /* ============ SECTION 3: STAT DECK ============ */
+  #stats-section{
+    background:var(--cream);
+    padding:120px 24px 100px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  #stats-section::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(59,42,32,0.02) 0px, transparent 1px, transparent 3px, rgba(59,42,32,0.02) 4px);
+    pointer-events:none;
+  }
+
+  .section-eyebrow{
+    text-align:center;
+    font-family:'Caveat',cursive;
+    font-size:1.4rem;
+    color:var(--terracotta);
+    margin-bottom:6px;
+    position:relative;
+    z-index:1;
+  }
+
+  .section-title{
+    text-align:center;
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(2rem, 5.5vw, 3rem);
+    color:var(--ink);
+    margin-bottom:64px;
+    position:relative;
+    z-index:1;
+  }
+
+  .stat-cards{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:32px;
+    max-width:1100px;
+    margin:0 auto;
+    position:relative;
+    z-index:1;
+  }
+
+  .stat-card{
+    background:#fffaf2;
+    border-radius:6px;
+    padding:40px 32px;
+    width:300px;
+    text-align:center;
+    box-shadow:0 14px 30px -10px var(--paper-shadow), 0 2px 6px rgba(59,42,32,0.06);
+    position:relative;
+    transition:transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .stat-card:hover{
+    transform:translateY(-6px) rotate(0deg) !important;
+    box-shadow:0 22px 40px -10px var(--paper-shadow), 0 4px 10px rgba(59,42,32,0.08);
+  }
+
+  .stat-card.card1{transform:rotate(-1.5deg);}
+  .stat-card.card2{transform:rotate(0.8deg);}
+  .stat-card.card3{transform:rotate(-0.6deg);}
+
+  .stat-card .pin{
+    position:absolute;
+    top:-10px;
+    left:50%;
+    transform:translateX(-50%);
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #d98a72, var(--terracotta));
+    box-shadow:0 2px 4px rgba(59,42,32,0.3);
+  }
+
+  .stat-label{
+    font-family:'Quicksand',sans-serif;
+    font-weight:600;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:18px;
+  }
+
+  .stat-value{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(2.2rem, 6vw, 3rem);
+    color:var(--terracotta);
+    margin-bottom:10px;
+    line-height:1.1;
+  }
+
+  .stat-value.small-num{font-size:clamp(1.6rem, 4.2vw, 2.1rem);}
+
+  .stat-sub{
+    font-family:'Caveat',cursive;
+    font-size:1.15rem;
+    color:var(--ink-soft);
+    line-height:1.4;
+  }
+
+  .izafaa-btn{
+    margin-top:18px;
+    background:var(--terracotta);
+    color:#fffaf2;
+    border:none;
+    padding:11px 22px;
+    border-radius:30px;
+    font-family:'Quicksand',sans-serif;
+    font-weight:600;
+    font-size:0.85rem;
+    letter-spacing:0.03em;
+    cursor:pointer;
+    transition:transform 0.15s ease, background 0.3s ease;
+    box-shadow:0 6px 14px -4px rgba(189,107,76,0.5);
+  }
+  .izafaa-btn:active{transform:scale(0.93);}
+  .izafaa-btn:hover{background:#a85a3f;}
+
+  .izafaa-pop{
+    position:absolute;
+    font-family:'Caveat',cursive;
+    font-weight:600;
+    color:var(--gold);
+    font-size:1.3rem;
+    pointer-events:none;
+    animation:popUp 1s ease forwards;
+  }
+  @keyframes popUp{
+    0%{opacity:1; transform:translate(-50%,0);}
+    100%{opacity:0; transform:translate(-50%,-50px);}
+  }
+
+  .reveal-on-scroll{
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-on-scroll.in-view{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* ============ SECTION 4: TIMELINE ============ */
+  #timeline-section{
+    background:linear-gradient(180deg, var(--cream), var(--cream-deep) 50%, var(--cream));
+    padding:100px 24px 120px;
+    position:relative;
+  }
+
+  .timeline-line{
+    position:absolute;
+    left:50%;
+    top:240px;
+    bottom:80px;
+    width:2px;
+    background:linear-gradient(to bottom, transparent, var(--blush) 5%, var(--blush) 95%, transparent);
+    transform:translateX(-50%);
+  }
+  @media (max-width:760px){
+    .timeline-line{left:28px;}
+  }
+
+  .timeline-track{
+    max-width:1000px;
+    margin:0 auto;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    gap:70px;
+  }
+
+  .tl-item{
+    display:flex;
+    width:100%;
+    position:relative;
+  }
+
+  .tl-item.left{justify-content:flex-start;}
+  .tl-item.right{justify-content:flex-end;}
+
+  .tl-card{
+    width:42%;
+    position:relative;
+  }
+
+  .tl-item.spotlight .tl-card{width:58%;}
+
+  @media (max-width:760px){
+    .tl-item.left, .tl-item.right{justify-content:flex-start; padding-left:56px;}
+    .tl-card, .tl-item.spotlight .tl-card{width:100%;}
+  }
+
+  .tl-dot{
+    position:absolute;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:var(--terracotta);
+    box-shadow:0 0 0 5px var(--cream), 0 0 0 6px rgba(189,107,76,0.3);
+    z-index:2;
+  }
+  @media (max-width:760px){
+    .tl-dot{left:28px;}
+  }
+
+  .flip-card{
+    perspective:1200px;
+    cursor:pointer;
+  }
+
+  .flip-inner{
+    position:relative;
+    transition:transform 0.7s cubic-bezier(.6,0,.4,1);
+    transform-style:preserve-3d;
+  }
+
+  .flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+
+  .flip-front, .flip-back{
+    backface-visibility:hidden;
+    border-radius:6px;
+  }
+
+  .flip-front{
+    background:#fffaf2;
+    padding:14px 14px 18px;
+    box-shadow:0 14px 28px -8px var(--paper-shadow), 0 2px 6px rgba(59,42,32,0.06);
+    transform:rotate(var(--tilt, -1.2deg));
+  }
+
+  .tl-photo{
+    width:100%;
+    aspect-ratio:4/3;
+    border-radius:3px;
+    background:linear-gradient(135deg, var(--blush), var(--cream-deep));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    position:relative;
+  }
+
+  .tl-photo svg{width:60%;height:60%;opacity:0.55;}
+
+  .tl-caption{
+    font-family:'Caveat',cursive;
+    font-size:1.25rem;
+    color:var(--ink-soft);
+    text-align:center;
+    margin-top:14px;
+    padding:0 6px;
+    line-height:1.35;
+  }
+
+  .tl-spotlight-tag{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:var(--terracotta);
+    color:#fffaf2;
+    font-family:'Quicksand',sans-serif;
+    font-weight:600;
+    font-size:0.7rem;
+    letter-spacing:0.06em;
+    padding:5px 11px;
+    border-radius:20px;
+    z-index:2;
+    box-shadow:0 4px 10px rgba(189,107,76,0.4);
+  }
+
+  .flip-back{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(135deg, var(--terracotta), #a85a3f);
+    transform:rotateY(180deg) rotate(var(--tilt, -1.2deg));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    text-align:center;
+  }
+
+  .flip-back p{
+    font-family:'Caveat',cursive;
+    font-size:1.3rem;
+    color:#fffaf2;
+    line-height:1.5;
+  }
+
+  .tap-hint{
+    font-family:'Quicksand',sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    opacity:0.55;
+    text-align:center;
+    margin-top:6px;
+  }
+
+  .tl-item.spotlight .tl-photo{aspect-ratio:16/10;}
+  .tl-item.spotlight .tl-caption{font-size:1.45rem;}
+
+  /* ============ HERO SECTION ============ */
+  #hero-section{
+    height:100vh;
+    width:100%;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:flex-end;
+  }
+
+.hero-bg{
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(
+        180deg,
+        transparent 30%,
+        rgba(251,243,231,0.55) 70%,
+        #FBF3E7 100%
+      ),
+      url('maryam.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index:0;
+}
+
+  .hero-bg::before{
+    content:'';
+    position:absolute;
+    top:10%;
+    left:25%;
+    width:350px;
+    height:350px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,225,180,0.3) 0%, transparent 70%);
+    animation:heroOrb 9s ease-in-out infinite;
+    filter:blur(50px);
+  }
+
+  .hero-bg::after{
+    content:'';
+    position:absolute;
+    top:30%;
+    right:15%;
+    width:250px;
+    height:250px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(232,180,181,0.2) 0%, transparent 70%);
+    animation:heroOrb 12s ease-in-out infinite reverse;
+    filter:blur(40px);
+  }
+
+  @keyframes heroOrb{
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(25px,-35px) scale(1.12);}
+  }
+
+  .hero-content{
+    position:relative;
+    z-index:2;
+    padding:0 clamp(28px,6vw,80px) clamp(40px,8vh,80px);
+    width:100%;
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity 1s ease, transform 1s ease;
+  }
+
+  .hero-content.show{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  .hero-subtitle{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(1rem,2.8vw,1.55rem);
+    color:var(--terracotta);
+    margin-bottom:6px;
+    letter-spacing:0.015em;
+  }
+
+  .hero-name{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(4.2rem,19vw,13rem);
+    color:var(--ink);
+    line-height:0.82;
+    margin-bottom:clamp(28px,6vh,60px);
+    letter-spacing:-0.02em;
+  }
+
+  .hero-scroll-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+  }
+
+  .hero-scroll-label{
+    border-left:2px solid rgba(59,42,32,0.22);
+    padding-left:14px;
+    display:flex;
+    flex-direction:column;
+    gap:1px;
+  }
+
+  .hero-scroll-label span{
+    font-family:'Quicksand',sans-serif;
+    font-weight:600;
+    font-size:0.68rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    opacity:0.6;
+  }
+
+  .hero-arrow{
+    width:20px;
+    height:20px;
+    color:var(--terracotta);
+    opacity:0.65;
+    animation:heroArrowPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes heroArrowPulse{
+    0%,100%{transform:translateY(0);opacity:0.65;}
+    50%{transform:translateY(7px);opacity:1;}
+  }
+
+  @media (max-width:640px){
+    .hero-name{font-size:clamp(3.5rem,18vw,8rem);}
+    .hero-bg::before{width:200px;height:200px;}
+    .hero-bg::after{width:150px;height:150px;}
+  }
+
+  /* ============ CLOSING SECTION ============ */
+  #closing-section{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(232,180,181,0.12), transparent 60%),
+      radial-gradient(circle at 20% 80%, rgba(201,154,60,0.08), transparent 50%),
+      var(--cream);
+    padding:80px 24px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+
+  #closing-section::before{
+    content:'';
+    position:absolute;
+    top:-60px;
+    left:50%;
+    transform:translateX(-50%);
+    width:1px;
+    height:120px;
+    background:linear-gradient(to bottom, transparent, var(--blush), transparent);
+  }
+
+  .closing-content{
+    max-width:600px;
+    position:relative;
+    z-index:1;
+  }
+
+  .closing-heart{
+    font-size:3rem;
+    margin-bottom:28px;
+    display:inline-block;
+    animation:heartPulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes heartPulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.12);}
+  }
+
+  .closing-title{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(2rem,5.5vw,3.2rem);
+    color:var(--ink);
+    margin-bottom:24px;
+  }
+
+  .closing-letter{
+    font-family:'Caveat',cursive;
+    font-size:clamp(1.2rem,3vw,1.6rem);
+    color:var(--ink-soft);
+    line-height:1.7;
+    margin-bottom:36px;
+  }
+
+  .closing-sig{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:1.3rem;
+    color:var(--terracotta);
+  }
+
+  .closing-footer{
+    margin-top:60px;
+    font-family:'Quicksand',sans-serif;
+    font-size:0.72rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    opacity:0.35;
+  }
+.tl-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+</style>
+</head>
+<body class="locked">
+
+<!-- ============ SECTION 1: ENVELOPE ============ -->
+<section id="envelope-section">
+  <div class="envelope-wrap" id="envelopeWrap" role="button" tabindex="0" aria-label="Open envelope">
+    <div class="tape t1"></div>
+    <div class="tape t2"></div>
+    <div class="envelope">
+      <div class="envelope-label"><span>TO</span>Pyarriii siii Gurrriyaaaa❤❤ </div>
+    </div>
+    <div class="wax-seal" id="waxSeal">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 21s-7.5-4.6-9.6-9.4C1.1 8.4 2.7 5 6 5c2 0 3.4 1.1 4 2.2C10.6 6.1 12 5 14 5c3.3 0 4.9 3.4 3.6 6.6C15.5 16.4 12 21 12 21z" stroke="#FBF3E7" stroke-width="1.4" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="reveal-text" id="revealText">
+      <div class="line1">Happy Birthday,<br>
+        Gurriya ❤️</div>
+      <div class="line2">I made you something.</div>
+    </div>
+    <div class="envelope-hint" id="envelopeHint">tap to open</div>
+  </div>
+  <div class="scroll-cue" id="scrollCue">
+    <span>scroll to continue</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- ============ HERO SECTION ============ -->
+<section id="hero-section">
+  <div class="hero-bg"></div>
+  <div class="hero-content" id="heroContent">
+    <p class="hero-subtitle">happy birthday, my favorite person</p>
+    <h1 class="hero-name">Maryam</h1>
+    <div class="hero-scroll-bar">
+      <div class="hero-scroll-label">
+        <span>scroll to relive</span>
+        <span>our favorite moments</span>
+      </div>
+      <svg class="hero-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <polyline points="19 12 12 19 5 12"></polyline>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 3: STARRY TRANSITION ============ -->
+<section id="starry-section">
+  <div class="starry-sticky">
+    <canvas id="starsCanvas"></canvas>
+    <div class="moon" id="moonEl"></div>
+    <div class="starry-text">
+      <div class="small-line" id="starLine1">Every star tonight is for you.</div>
+      <div class="big-line" id="starLine2">Happy Birthday, Gurriya.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 3: STAT DECK ============ -->
+<section id="stats-section">
+  <div class="section-eyebrow reveal-on-scroll">a little math</div>
+  <h2 class="section-title reveal-on-scroll">Us, by the Numbers</h2>
+
+  <div class="stat-cards">
+    <div class="stat-card card1 reveal-on-scroll">
+      <div class="pin"></div>
+      <div class="stat-label">Days of Us</div>
+      <div class="stat-value" id="daysCounter">0</div>
+      <div class="stat-sub">and counting, every single one</div>
+    </div>
+
+    <div class="stat-card card2 reveal-on-scroll">
+      <div class="pin"></div>
+      <div class="stat-label">Laughter Stat</div>
+      <div class="stat-value small-num">∞</div>
+      <div class="stat-sub">times you've made me laugh when I was trying to be serious</div>
+    </div>
+
+    <div class="stat-card card3 reveal-on-scroll" id="izafaaCard">
+      <div class="pin"></div>
+      <div class="stat-label">Pyaar Mein Izafaa<br>
+    If you remember👉👈</div>
+      <div class="stat-value" id="izafaaCounter">0</div>
+      <div class="stat-sub">tap to add a little more</div>
+      <button class="izafaa-btn" id="izafaaBtn">+1 Izafaa</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 4: TIMELINE ============ -->
+<section id="timeline-section">
+  <div class="section-eyebrow reveal-on-scroll">flip each photo</div>
+  <h2 class="section-title reveal-on-scroll">Our Story So Far</h2>
+
+  <div class="timeline-line"></div>
+  <div class="timeline-track">
+
+    <!-- 1 -->
+    <div class="tl-item left reveal-on-scroll">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="flip-card" style="--tilt:-1.4deg" data-flip>
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="tl-photo">
+                <img src="maryam1.jpg" alt="memory">
+              </div>
+              <p class="tl-caption">"jab se app aaye ho, sab kuch better lagta hai"</p>
+              <p class="tap-hint">the day it started · tap for the secret</p>
+            </div>
+            <div class="flip-back"><p>The Dress The Stylee The Divaa 😘</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="tl-item right reveal-on-scroll">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="flip-card" style="--tilt:1deg" data-flip>
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="tl-photo">
+                <img src="maryam2.jpg" alt="memory">
+              </div>
+              <p class="tl-caption">"best trip, worse navigation 🧭"</p>
+              <p class="tap-hint">first trip together(when😭) · tap for the secret</p>
+            </div>
+            <div class="flip-back"><p>We Will go in Yourr Favoritee Carr (Fortuner)🚘<br> Inn Shaa Allahh</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 - SPOTLIGHT -->
+    <div class="tl-item left spotlight reveal-on-scroll">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="flip-card" style="--tilt:-0.8deg" data-flip>
+          <div class="flip-inner">
+            <div class="flip-front">
+              <span class="tl-spotlight-tag">Dr. Maryam 🩺</span>
+              <div class="tl-photo">
+                <img src="maryam3.jpg" alt="memory">
+              </div>
+              <p class="tl-caption">"the only doctor who's ever stolen my heart"</p>
+              <p class="tap-hint">her in the doctor coat · tap for the secret</p>
+            </div>
+            <div class="flip-back"><p>The Doctorr Sahibaaa ❤ app sy injection lagwana 😂</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="tl-item right reveal-on-scroll">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="flip-card" style="--tilt:1.3deg" data-flip>
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="tl-photo">
+                <img src="maryam4.jpg" alt="memory">
+              </div>
+              <p class="tl-caption">"nothing special, except it was with you"</p>
+              <p class="tap-hint">a random Tuesday · tap for the secret</p>
+            </div>
+            <div class="flip-back"><p>Hayeee I Miss usssssssss</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 - SPOTLIGHT -->
+    <div class="tl-item left spotlight reveal-on-scroll">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="flip-card" style="--tilt:-1deg" data-flip>
+          <div class="flip-inner">
+            <div class="flip-front">
+              <span class="tl-spotlight-tag">Fortuner Drives 🚙</span>
+              <div class="tl-photo">
+                <img src="maryam5.jpg" alt="memory">
+              </div>
+              <p class="tl-caption">"windows down, you driving, me just staring at you"</p>
+              <p class="tap-hint">you two with the Fortuner · tap for the secret</p>
+            </div>
+            <div class="flip-back"><p>Gurriyaa Drivingg, Me Passenger Prince 😋😊</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="tl-item right reveal-on-scroll">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="flip-card" style="--tilt:0.9deg" data-flip>
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="tl-photo">
+                <img src="maryam6.jpg" alt="memory">
+              </div>
+              <p class="tl-caption">"you fit right in, like you were always supposed to"</p>
+              <p class="tap-hint">with the family · tap for the secret</p>
+            </div>
+            <div class="flip-back"><p>I want to see us together like this with my family</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="tl-item left reveal-on-scroll">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="flip-card" style="--tilt:-1.1deg" data-flip>
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="tl-photo">
+                <img src="maryam7.jpg" alt="memory">
+              </div>
+              <p class="tl-caption">"my favorite kind of day"</p>
+              <p class="tap-hint">just us, no occasion · tap for the secret</p>
+            </div>
+            <div class="flip-back"><p>Fairyy Wingsss</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ CLOSING SECTION ============ -->
+<section id="closing-section">
+  <div class="closing-content">
+    <div class="closing-heart reveal-on-scroll">❤️</div>
+    <h2 class="closing-title reveal-on-scroll">You make everything beautiful.</h2>
+    <p class="closing-letter reveal-on-scroll">
+      Gurriyaa, the world got a little brighter when you stepped into it.<br>
+      And my world? It's been nothing short of magic since you stepped into mine.<br><br>
+      Happy birthday, Bettuuu. Today and always. 🎂
+    </p>
+    <p class="closing-sig reveal-on-scroll">— forever yours</p>
+    <div class="closing-footer reveal-on-scroll">made with love, just for you</div>
+  </div>
+</section>
+
+<script>
+  const wrap = document.getElementById('envelopeWrap');
+  const reveal = document.getElementById('revealText');
+  const cue = document.getElementById('scrollCue');
+  let opened = false;
+
+  function openEnvelope(){
+    if(opened) return;
+    opened = true;
+    wrap.classList.add('opened');
+    setTimeout(()=>{
+      reveal.classList.add('show');
+    }, 300);
+    setTimeout(()=>{
+      cue.classList.add('show');
+      document.body.classList.remove('locked');
+    }, 1900);
+  }
+
+  wrap.addEventListener('click', openEnvelope);
+  wrap.addEventListener('keypress', (e)=>{
+    if(e.key === 'Enter' || e.key === ' ') openEnvelope();
+  });
+
+  // ============ STARRY SECTION ============
+  const starsCanvas = document.getElementById('starsCanvas');
+  const sctx = starsCanvas.getContext('2d');
+  const moonEl = document.getElementById('moonEl');
+  const starLine1 = document.getElementById('starLine1');
+  const starLine2 = document.getElementById('starLine2');
+  const starrySection = document.getElementById('starry-section');
+
+  let starsW, starsH, stars = [], shootingStars = [];
+
+  function resizeStarsCanvas(){
+    starsW = starsCanvas.width = starsCanvas.offsetWidth * window.devicePixelRatio;
+    starsH = starsCanvas.height = starsCanvas.offsetHeight * window.devicePixelRatio;
+  }
+
+  function initStars(){
+    stars = [];
+    const count = Math.floor((starsCanvas.offsetWidth * starsCanvas.offsetHeight) / 6000);
+    for(let i=0;i<count;i++){
+      stars.push({
+        x: Math.random()*starsW,
+        y: Math.random()*starsH,
+        r: (Math.random()*1.4 + 0.3) * window.devicePixelRatio,
+        baseAlpha: Math.random()*0.5 + 0.3,
+        twinkleSpeed: Math.random()*0.02 + 0.005,
+        twinklePhase: Math.random()*Math.PI*2
+      });
+    }
+  }
+
+  // Heart constellation points (normalized 0-1 coords within a box)
+  const heartPoints = [
+    [0.50, 0.32],[0.38, 0.18],[0.24, 0.18],[0.12, 0.30],
+    [0.12, 0.46],[0.30, 0.66],[0.50, 0.86],
+    [0.70, 0.66],[0.88, 0.46],[0.88, 0.30],
+    [0.76, 0.18],[0.62, 0.18],[0.50, 0.32]
+  ];
+
+  let heartBox = {x:0,y:0,size:0};
+  let heartProgress = 0; // 0 to 1, how much of the constellation has drawn
+  let heartTriggered = false;
+  let heartStarsPlaced = false;
+  let heartStarList = [];
+
+  function setupHeartBox(){
+    const size = Math.min(starsCanvas.offsetWidth, starsCanvas.offsetHeight) * 0.32;
+    heartBox = {
+      x: starsCanvas.offsetWidth*0.5 - size*0.5,
+      y: starsCanvas.offsetHeight*0.38 - size*0.5,
+      size: size
+    };
+    heartStarList = heartPoints.map(p=>({
+      x: (heartBox.x + p[0]*heartBox.size) * window.devicePixelRatio,
+      y: (heartBox.y + p[1]*heartBox.size) * window.devicePixelRatio
+    }));
+  }
+
+  function animateStars(){
+    sctx.clearRect(0,0,starsW,starsH);
+    const t = Date.now()*0.001;
+
+    // twinkle stars
+    stars.forEach(s=>{
+      const alpha = s.baseAlpha + Math.sin(t*s.twinkleSpeed*40 + s.twinklePhase)*0.25;
+      sctx.beginPath();
+      sctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      sctx.fillStyle = `rgba(253,246,227,${Math.max(0,Math.min(1,alpha))})`;
+      sctx.fill();
+    });
+
+    // shooting stars
+    shootingStars.forEach((sh, i)=>{
+      sh.x += sh.vx;
+      sh.y += sh.vy;
+      sh.life -= 1;
+      const grad = sctx.createLinearGradient(sh.x, sh.y, sh.x - sh.vx*8, sh.y - sh.vy*8);
+      grad.addColorStop(0, 'rgba(253,246,227,0.9)');
+      grad.addColorStop(1, 'rgba(253,246,227,0)');
+      sctx.strokeStyle = grad;
+      sctx.lineWidth = 2*window.devicePixelRatio;
+      sctx.beginPath();
+      sctx.moveTo(sh.x, sh.y);
+      sctx.lineTo(sh.x - sh.vx*8, sh.y - sh.vy*8);
+      sctx.stroke();
+      if(sh.life <= 0) shootingStars.splice(i,1);
+    });
+
+    if(Math.random() < 0.012 && shootingStars.length < 2 && heartProgress < 0.3){
+      shootingStars.push({
+        x: Math.random()*starsW*0.6 + starsW*0.2,
+        y: Math.random()*starsH*0.3,
+        vx: -(Math.random()*4+3)*window.devicePixelRatio,
+        vy: (Math.random()*2+1.5)*window.devicePixelRatio,
+        life: 40
+      });
+    }
+
+    // heart constellation drawing
+    if(heartProgress > 0){
+      const totalSegs = heartStarList.length - 1;
+      const drawnSegs = heartProgress * totalSegs;
+
+      sctx.strokeStyle = 'rgba(232,180,181,0.85)';
+      sctx.lineWidth = 1.6*window.devicePixelRatio;
+      sctx.lineJoin = 'round';
+      sctx.shadowColor = 'rgba(232,180,181,0.6)';
+      sctx.shadowBlur = 8*window.devicePixelRatio;
+      sctx.beginPath();
+      sctx.moveTo(heartStarList[0].x, heartStarList[0].y);
+      for(let i=1;i<heartStarList.length;i++){
+        if(i <= drawnSegs){
+          sctx.lineTo(heartStarList[i].x, heartStarList[i].y);
+        } else if(i-1 < drawnSegs){
+          const frac = drawnSegs - (i-1);
+          const px = heartStarList[i-1].x + (heartStarList[i].x - heartStarList[i-1].x)*frac;
+          const py = heartStarList[i-1].y + (heartStarList[i].y - heartStarList[i-1].y)*frac;
+          sctx.lineTo(px, py);
+        }
+      }
+      sctx.stroke();
+      sctx.shadowBlur = 0;
+
+      // draw node stars
+      heartStarList.forEach((p, idx)=>{
+        if(idx <= drawnSegs + 0.01){
+          const pulse = 1 + Math.sin(t*2 + idx)*0.15;
+          sctx.beginPath();
+          sctx.arc(p.x, p.y, 2.6*window.devicePixelRatio*pulse, 0, Math.PI*2);
+          sctx.fillStyle = '#fdf6e3';
+          sctx.shadowColor = 'rgba(253,246,227,0.8)';
+          sctx.shadowBlur = 10*window.devicePixelRatio;
+          sctx.fill();
+          sctx.shadowBlur = 0;
+        }
+      });
+    }
+
+    requestAnimationFrame(animateStars);
+  }
+
+  function setupStarryCanvas(){
+    resizeStarsCanvas();
+    initStars();
+    setupHeartBox();
+  }
+
+  setupStarryCanvas();
+  animateStars();
+  window.addEventListener('resize', setupStarryCanvas);
+
+  // Scroll-driven progress through starry section
+  function handleStarryScroll(){
+    const rect = starrySection.getBoundingClientRect();
+    const sectionHeight = starrySection.offsetHeight;
+    const scrolled = -rect.top;
+    const progress = Math.max(0, Math.min(1, scrolled / (sectionHeight - window.innerHeight)));
+
+    // moon fades in early
+    if(progress > 0.08){ moonEl.classList.add('show'); }
+
+    // small line shows
+    if(progress > 0.18){ starLine1.classList.add('show'); }
+
+    // heart constellation draws between 0.32 and 0.62
+    const heartStart = 0.30, heartEnd = 0.58;
+    if(progress >= heartStart){
+      heartProgress = Math.max(0, Math.min(1, (progress - heartStart)/(heartEnd - heartStart)));
+    } else {
+      heartProgress = 0;
+    }
+
+    // big line shows after heart completes
+    if(progress > 0.64){
+      starLine1.style.opacity = '0';
+      starLine2.classList.add('show');
+    } else {
+      starLine2.classList.remove('show');
+      starLine1.style.opacity = '';
+    }
+  }
+
+  window.addEventListener('scroll', handleStarryScroll, {passive:true});
+
+  // ============ GENERIC SCROLL REVEAL ============
+  const revealObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, {threshold:0.15});
+
+  document.querySelectorAll('.reveal-on-scroll').forEach(el=>revealObserver.observe(el));
+
+  // ============ DAYS OF US COUNTER ============
+  const KEY_DATE = new Date('2024-09-21T00:00:00');
+  const daysCounterEl = document.getElementById('daysCounter');
+
+  function updateDaysCounter(){
+    const now = new Date();
+    const diffMs = now - KEY_DATE;
+    const days = Math.floor(diffMs / (1000*60*60*24));
+    daysCounterEl.textContent = days.toLocaleString();
+  }
+  updateDaysCounter();
+  setInterval(updateDaysCounter, 60000);
+
+  // ============ IZAFAA COUNTER ============
+  const izafaaBtn = document.getElementById('izafaaBtn');
+  const izafaaCounter = document.getElementById('izafaaCounter');
+  const izafaaCard = document.getElementById('izafaaCard');
+  let izafaaCount = 0;
+
+  izafaaBtn.addEventListener('click', (e)=>{
+    izafaaCount++;
+    izafaaCounter.textContent = izafaaCount;
+
+    const pop = document.createElement('div');
+    pop.className = 'izafaa-pop';
+    pop.textContent = '+1';
+    const rect = izafaaBtn.getBoundingClientRect();
+    const cardRect = izafaaCard.getBoundingClientRect();
+    pop.style.left = (rect.left - cardRect.left + rect.width/2) + 'px';
+    pop.style.top = (rect.top - cardRect.top) + 'px';
+    izafaaCard.appendChild(pop);
+    setTimeout(()=>pop.remove(), 1000);
+
+    izafaaCounter.style.transform = 'scale(1.15)';
+    setTimeout(()=>{ izafaaCounter.style.transition='transform 0.25s ease'; izafaaCounter.style.transform='scale(1)'; }, 50);
+  });
+
+  // ============ FLIP CARDS ============
+  document.querySelectorAll('[data-flip]').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('flipped');
+    });
+  });
+
+  // ============ HERO ENTRANCE ============
+  const heroContent = document.getElementById('heroContent');
+  const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        heroContent.classList.add('show');
+      }
+    });
+  }, {threshold: 0.1});
+  heroObserver.observe(heroContent);
+</script>
+
+</body>
+</html>
